@@ -10,8 +10,7 @@ type Api interface {
 	ping(*fiber.Ctx) error
 }
 
-
-func SetupRoutes(app *fiber.App, api Api) {
-	app.Get("/ping", api.ping)
-	app.Get("/app", api.app)
+func SetupRoutesGroup(router fiber.Router, api Api) {
+ 	router.Get("/ping", api.ping)
+ 	router.Get("/app", api.app)
 }

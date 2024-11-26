@@ -17,12 +17,14 @@ func init() {
 	initializers.LoadEnvVariables()
 	config.LoadFromEnv()
 	initializers.LogSetUp(config.Configs.LoggerConfig)
-	repository.Init()
 }
 
 func main() {
 	log.Infof("Application %s, version %s\n", constants.AppName, constants.Version)
 
+	repository.Init()
+	defer repository.Close()
+	
 	wg := sync.WaitGroup{}
 	wg.Add(1)
 	go httpEngine.Run(config.Configs.WebServerConfig.Http)
